@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lumora Bot | Professional Trading Automation</title>
+<style>
+*{box-sizing:border-box;scroll-behavior:smooth}
+:root{
+ --bg:#010713;--bg2:#031329;--glass:rgba(7,25,48,.52);--glass2:rgba(8,31,58,.38);
+ --line:rgba(66,155,236,.30);--line2:rgba(118,189,255,.18);
+ --text:#f6f9ff;--muted:#a8bdd8;--blue:#168cff;--cyan:#00d9ff;
+ --purple:#814cff;--green:#00e0a4
+}
+body{
+ margin:0;color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.5;
+ background:
+ radial-gradient(circle at 12% 12%,rgba(0,126,255,.14),transparent 28%),
+ radial-gradient(circle at 86% 22%,rgba(117,61,255,.12),transparent 25%),
+ linear-gradient(180deg,#010713 0%,#021126 48%,#010713 100%);
+}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:linear-gradient(rgba(72,145,215,.15) 1px,transparent 1px),linear-gradient(90deg,rgba(72,145,215,.15) 1px,transparent 1px);background-size:54px 54px;mask-image:linear-gradient(to bottom,#000,transparent 80%)}
+a{text-decoration:none;color:inherit}.wrap{width:min(1180px,92%);margin:auto}
+nav{
+ height:70px;border-bottom:1px solid var(--line2);background:rgba(1,8,20,.62);
+ backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);position:sticky;top:0;z-index:50;
+ box-shadow:0 10px 35px rgba(0,0,0,.24)
+}
+.nav{height:100%;display:flex;align-items:center;justify-content:space-between}.logo{width:178px;max-height:54px;object-fit:contain}
+.menu{display:flex;gap:28px;font-size:13px;color:#dce7f5}.menu a{transition:.25s}.menu a:hover{color:#4bbcff;text-shadow:0 0 12px #149cff}
+.btn{
+ display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:13px 22px;border-radius:12px;
+ color:#fff;font-weight:800;background:linear-gradient(110deg,#138cff,#824cff);
+ border:1px solid rgba(129,194,255,.55);box-shadow:0 12px 35px rgba(33,111,255,.28),inset 0 1px rgba(255,255,255,.22);
+ transition:.25s
+}.btn:hover{transform:translateY(-2px);box-shadow:0 16px 42px rgba(33,111,255,.38),inset 0 1px rgba(255,255,255,.3)}
+.btn.alt{background:rgba(4,20,38,.34);border-color:rgba(77,159,230,.55);box-shadow:inset 0 1px rgba(255,255,255,.08)}
+.hero{padding:38px 0 30px;border-bottom:1px solid var(--line2)}.heroGrid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+.kicker{font-size:12px;letter-spacing:2.4px;color:#24b8ff;font-weight:850;text-shadow:0 0 15px #00aaff66}
+h1{font-size:58px;line-height:1;margin:14px 0 10px;letter-spacing:-2px}.grad{background:linear-gradient(90deg,#fff 26%,#fff 43%,#9a59ff 59%,#0795ff 80%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tag{letter-spacing:5px;font-size:14px;color:#edf4ff}.hero p{font-size:17px;line-height:1.65;color:#c6d6e8;max-width:530px}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:15px 0}.checks div:before{content:"✓";color:var(--green);font-weight:900;margin-right:9px;text-shadow:0 0 10px #00e0a477}
+.ctas{display:flex;gap:12px;flex-wrap:wrap}.meta{font-size:12px;color:#9cb4cf;margin-top:12px}
+.heroImage,.brokerImage{
+ width:100%;height:auto;display:block;border-radius:20px;border:1px solid rgba(67,165,255,.42);
+ box-shadow:0 0 45px rgba(0,113,255,.18),inset 0 1px rgba(255,255,255,.12);
+ background:rgba(5,20,38,.35)
+}
+section{padding:32px 0;border-bottom:1px solid var(--line2)}
+.head{display:flex;align-items:end;justify-content:space-between;margin-bottom:18px}.title{font-size:23px;font-weight:850;text-shadow:0 2px 15px #000}.title:before{content:"◈";color:#4e78ff;margin-right:12px;text-shadow:0 0 13px #4e78ff}.sub{font-size:12px;color:#89a7c7}
+.features{display:grid;grid-template-columns:repeat(8,1fr);gap:10px}
+.card{
+ min-height:140px;padding:15px 9px;text-align:center;border-radius:14px;
+ background:linear-gradient(145deg,rgba(18,54,87,.48),rgba(3,17,34,.44));
+ border:1px solid rgba(74,161,231,.27);box-shadow:inset 0 1px rgba(255,255,255,.09),0 12px 30px rgba(0,0,0,.14);
+ backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);position:relative;overflow:hidden;transition:.28s
+}.card:before{content:"";position:absolute;left:8%;right:8%;top:0;height:1px;background:linear-gradient(90deg,transparent,#5ac7ff,transparent);opacity:.7}
+.card:hover{transform:translateY(-4px);border-color:rgba(76,181,255,.58);box-shadow:0 18px 45px rgba(0,100,255,.17),inset 0 1px rgba(255,255,255,.14)}
+.ico{font-size:29px;margin-bottom:7px;filter:drop-shadow(0 0 9px rgba(0,163,255,.5))}.card h3{font-size:12px;margin:0 0 8px}.card p{font-size:10px;color:#a5b9d1;margin:0}
+.brokerImage{border-radius:16px}
+.three{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:18px}
+.box{padding:22px 20px;border:1px solid rgba(68,151,222,.22);border-radius:16px;background:linear-gradient(145deg,rgba(10,35,60,.34),rgba(2,14,29,.32));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:inset 0 1px rgba(255,255,255,.06)}
+.box h2{font-size:21px;margin:0 0 13px}.list{display:grid;gap:8px;font-size:13px;color:#c8d7e9}.list div:before{content:"✓";color:#00e1ae;font-weight:900;margin-right:9px;text-shadow:0 0 10px #00e1ae66}
+.ctaBox{padding:26px;border:1px solid rgba(70,164,240,.38);border-radius:17px;background:linear-gradient(135deg,rgba(12,44,79,.54),rgba(7,31,61,.38));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 18px 45px rgba(0,65,150,.15),inset 0 1px rgba(255,255,255,.08)}
+.ctaBox h2{font-size:24px;margin:0 0 8px}.ctaBox p{color:#abc0d9;font-size:13px}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.step{
+ padding:17px;border:1px solid rgba(67,151,222,.27);border-radius:16px;
+ background:linear-gradient(145deg,rgba(12,39,66,.48),rgba(3,17,34,.4));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+ box-shadow:inset 0 1px rgba(255,255,255,.07);transition:.25s
+}.step:hover{transform:translateY(-3px);border-color:rgba(70,180,255,.55)}
+.num{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#0878f0,#5a4bc5);font-weight:900;margin-bottom:10px;box-shadow:0 0 22px rgba(36,123,255,.34),inset 0 1px #ffffff44}
+.step h3{font-size:13px;margin:0}.step p{font-size:10px;color:#9eb2ca;margin:6px 0 0}
+.updateGrid{display:grid;grid-template-columns:1.25fr .9fr;gap:18px}.update{display:grid;grid-template-columns:230px 1fr;gap:10px}
+.panel{border:1px solid rgba(66,151,222,.27);background:linear-gradient(145deg,rgba(10,35,60,.48),rgba(3,16,31,.42));border-radius:14px;padding:18px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:inset 0 1px rgba(255,255,255,.07)}
+.badge{display:inline-block;background:#00dfa5;color:#002119;padding:4px 8px;border-radius:6px;font-size:10px;font-weight:900;box-shadow:0 0 18px #00dfa544}.panel h2{margin:12px 0 5px}.panel p,.panel li{color:#a8bdd5;font-size:12px}
+.support{display:grid;grid-template-columns:1fr 1fr;gap:8px}.support div{padding:12px;border:1px solid rgba(66,151,222,.27);background:rgba(7,28,48,.42);border-radius:10px;font-size:11px;backdrop-filter:blur(14px)}
+footer{padding:28px 0;color:#91a9c5;font-size:11px}.foot{display:flex;align-items:center;justify-content:space-between;gap:18px}.footLogo{width:155px}
+@media(max-width:1000px){.features{grid-template-columns:repeat(4,1fr)}.heroGrid{grid-template-columns:1fr}.steps{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.menu{display:none}.hero h1{font-size:43px}.features{grid-template-columns:repeat(2,1fr)}.three,.updateGrid{grid-template-columns:1fr}.box{border-right:0}.steps{grid-template-columns:1fr}.update{grid-template-columns:1fr}.foot{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+<nav><div class="wrap nav"><a href="#home"><img class="logo" src="assets/lumora-logo.png" alt="Lumora"></a><div class="menu"><a href="#home">Home</a><a href="#features">Features</a><a href="#brokers">Brokers</a><a href="#installation">Installation</a><a href="#updates">Updates</a><a href="#support">Support</a></div><a class="btn" href="downloads/LumoraBot-Latest.zip">⇩ Download Client</a></div></nav>
+
+<section class="hero" id="home"><div class="wrap heroGrid"><div>
+<div class="kicker">PROFESSIONAL TRADING AUTOMATION</div><h1><span class="grad">LUMORA</span> BOT</h1><div class="tag">DISCIPLINE BUILDS WEALTH</div>
+<p>A powerful automated trading solution designed for consistent performance, advanced risk management and a smarter trading experience.</p>
+<div class="checks"><div>Automated Trading</div><div>Advanced Risk Control</div><div>Multi-Broker Support</div><div>Professional Customer Support</div></div>
+<div class="ctas"><a class="btn" href="downloads/LumoraBot-Latest.zip">⇩ Download Latest Version</a><a class="btn alt" href="#installation">▷ Watch Video</a></div>
+<div class="meta">Latest Version: <b>v1.0.3</b> &nbsp; | &nbsp; Windows 10/11 &nbsp; | &nbsp; MetaTrader 5</div>
+</div><div><img class="heroImage" src="assets/hero-full.png" alt="Lumora Bot performance panel"></div></div></section>
+
+<section id="features"><div class="wrap"><div class="head"><div class="title">Key Features</div><div class="sub">Everything you need for a smarter trading journey.</div></div>
+<div class="features">
+<div class="card"><div class="ico">⚙️</div><h3>Automated<br>Trading</h3><p>Execute trades 24/7 with precision.</p></div>
+<div class="card"><div class="ico">📈</div><h3>Advanced<br>Market Analysis</h3><p>Uses multiple indicators & AI logic.</p></div>
+<div class="card"><div class="ico">🎯</div><h3>Precision<br>Entry System</h3><p>High probability trade entries.</p></div>
+<div class="card"><div class="ico">🛡️</div><h3>Risk<br>Management</h3><p>Built-in protection to minimize risk.</p></div>
+<div class="card"><div class="ico">🔄</div><h3>Auto Trade<br>Management</h3><p>TP, SL and trailing handled automatically.</p></div>
+<div class="card"><div class="ico">📊</div><h3>Real-Time<br>Performance</h3><p>Track results in real-time.</p></div>
+<div class="card"><div class="ico">🔒</div><h3>Secure Client<br>System</h3><p>Your account stays protected.</p></div>
+<div class="card"><div class="ico">☁️</div><h3>Continuous<br>Updates</h3><p>Regular improvements and new features.</p></div>
+</div></div></section>
+
+<section id="brokers"><div class="wrap"><div class="head"><div class="title">Supported Brokers</div><div class="sub">Trade with trusted global brokers.</div></div><img class="brokerImage" src="assets/brokers-strip.png" alt="Supported brokers"></div></section>
+
+<section><div class="wrap three"><div class="box"><h2>🖥 System Requirements</h2><div class="list"><div>Windows 10 / 11 (64-bit)</div><div>MetaTrader 5 (Supported Broker)</div><div>Stable Internet Connection</div><div>Minimum 4GB RAM (8GB Recommended)</div><div>VPS Recommended (for 24/7 Trading)</div></div></div><div class="box"><h2>💎 Why Choose Lumora?</h2><div class="list"><div>Proven Strategy</div><div>Multi-Broker Compatibility</div><div>Regular Updates</div><div>Dedicated Support</div><div>Growing Community</div><div>Built for Long-Term Success</div></div></div><div class="ctaBox"><h2>START TRADING<br>THE SMART WAY</h2><p>Join traders using Lumora Bot for a more disciplined automated trading experience.</p><a class="btn" href="downloads/LumoraBot-Latest.zip">⇩ Download Now</a></div></div></section>
+
+<section id="installation"><div class="wrap"><div class="head"><div class="title">Easy Installation</div><div class="sub">Get started in just a few simple steps.</div></div><div class="steps">
+<div class="step"><div class="num">1</div><h3>⇩ Download</h3><p>Download the latest client file from this page.</p></div>
+<div class="step"><div class="num">2</div><h3>□ Extract</h3><p>Extract the downloaded ZIP file.</p></div>
+<div class="step"><div class="num">3</div><h3>▣ Install / Copy</h3><p>Follow the installation guide inside.</p></div>
+<div class="step"><div class="num">4</div><h3>● Login</h3><p>Use your client credentials to log in.</p></div>
+<div class="step"><div class="num">5</div><h3>▷ Start Trading</h3><p>Attach to your MT5 chart and let Lumora trade.</p></div>
+</div></div></section>
+
+<section id="updates"><div class="wrap"><div class="head"><div class="title">Latest Update</div><div class="sub">Current release information.</div></div><div class="updateGrid">
+<div class="update"><div class="panel"><span class="badge">NEW</span><h2>Version v1.0.3</h2><p>Released: 2026.09.01</p><a class="btn" href="downloads/LumoraBot-Latest.zip">⇩ Download</a></div><div class="panel"><b>What's New?</b><ul><li>Improved trade entry logic</li><li>Enhanced risk management</li><li>Better stability and performance</li><li>Minor bug fixes</li></ul></div></div>
+<div id="support"><div class="title" style="margin-bottom:12px">🎧 Need Help?</div><div class="support"><div>♧ Installation Support</div><div>▣ Broker Setup</div><div>◷ Technical Support</div><div>⌕ FAQ</div></div><a class="btn" style="width:100%;margin-top:10px" href="mailto:support@lumora.example">✈ Contact Support</a></div>
+</div></div></section>
+
+<footer><div class="wrap foot"><div><img class="footLogo" src="assets/lumora-logo.png"><br>© 2026 Lumora. All rights reserved.</div><div>Privacy Policy &nbsp; | &nbsp; Terms of Service &nbsp; | &nbsp; Support</div><div>DISCIPLINE BUILDS WEALTH —<br>Version v1.0.3</div></div></footer>
+</body></html>
