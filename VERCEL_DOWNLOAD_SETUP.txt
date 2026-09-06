@@ -1,0 +1,12 @@
+LUMORA VERCEL DOWNLOAD SETUP
+
+The customer download is now /api/latest-download and reads the latest published release from Supabase.
+
+In Vercel Project -> Settings -> Environment Variables add:
+SUPABASE_URL = https://loxyfwlqdhvlmyzhlpvf.supabase.co
+SUPABASE_SERVICE_ROLE_KEY = <YOUR SUPABASE SECRET KEY>
+
+Add these to Production (and Preview if desired), then redeploy.
+NEVER put SUPABASE_SERVICE_ROLE_KEY in browser files, GitHub, or admin/config.js.
+
+The storage bucket bot-releases can remain PRIVATE. The Vercel server function creates a 5-minute signed URL.

@@ -80,14 +80,14 @@ footer{padding:28px 0;color:#91a9c5;font-size:11px}.foot{display:flex;align-item
 </style>
 </head>
 <body>
-<nav><div class="wrap nav"><a href="#home"><img class="logo" src="assets/lumora-logo.png" alt="Lumora"></a><div class="menu"><a href="#home">Home</a><a href="#features">Features</a><a href="#brokers">Brokers</a><a href="#installation">Installation</a><a href="#updates">Updates</a><a href="#support">Support</a></div><a class="btn" href="downloads/LumoraBot-Latest.zip">⇩ Download Client</a></div></nav>
+<nav><div class="wrap nav"><a href="#home"><img class="logo" src="assets/lumora-logo.png" alt="Lumora"></a><div class="menu"><a href="#home">Home</a><a href="#features">Features</a><a href="#brokers">Brokers</a><a href="#installation">Installation</a><a href="#updates">Updates</a><a href="#support">Support</a></div><a class="btn" href="/api/latest-download">⇩ Download Client</a></div></nav>
 
 <section class="hero" id="home"><div class="wrap heroGrid"><div>
 <div class="kicker">PROFESSIONAL TRADING AUTOMATION</div><h1><span class="grad">LUMORA</span> BOT</h1><div class="tag">DISCIPLINE BUILDS WEALTH</div>
 <p>A powerful automated trading solution designed for consistent performance, advanced risk management and a smarter trading experience.</p>
 <div class="checks"><div>Automated Trading</div><div>Advanced Risk Control</div><div>Multi-Broker Support</div><div>Professional Customer Support</div></div>
-<div class="ctas"><a class="btn" href="downloads/LumoraBot-Latest.zip">⇩ Download Latest Version</a><a class="btn alt" href="#installation">▷ Watch Video</a></div>
-<div class="meta">Latest Version: <b>v1.0.3</b> &nbsp; | &nbsp; Windows 10/11 &nbsp; | &nbsp; MetaTrader 5</div>
+<div class="ctas"><a class="btn" href="/api/latest-download">⇩ Download Latest Version</a><a class="btn alt" href="#installation">▷ Watch Video</a></div>
+<div class="meta">Latest Version: <b id="latestVersion">Checking...</b> &nbsp; | &nbsp; Windows 10/11 &nbsp; | &nbsp; MetaTrader 5</div>
 </div><div><img class="heroImage" src="assets/hero-full.png" alt="Lumora Bot performance panel"></div></div></section>
 
 <section id="features"><div class="wrap"><div class="head"><div class="title">Key Features</div><div class="sub">Everything you need for a smarter trading journey.</div></div>
@@ -104,7 +104,7 @@ footer{padding:28px 0;color:#91a9c5;font-size:11px}.foot{display:flex;align-item
 
 <section id="brokers"><div class="wrap"><div class="head"><div class="title">Supported Brokers</div><div class="sub">Trade with trusted global brokers.</div></div><img class="brokerImage" src="assets/brokers-strip.png" alt="Supported brokers"></div></section>
 
-<section><div class="wrap three"><div class="box"><h2>🖥 System Requirements</h2><div class="list"><div>Windows 10 / 11 (64-bit)</div><div>MetaTrader 5 (Supported Broker)</div><div>Stable Internet Connection</div><div>Minimum 4GB RAM (8GB Recommended)</div><div>VPS Recommended (for 24/7 Trading)</div></div></div><div class="box"><h2>💎 Why Choose Lumora?</h2><div class="list"><div>Proven Strategy</div><div>Multi-Broker Compatibility</div><div>Regular Updates</div><div>Dedicated Support</div><div>Growing Community</div><div>Built for Long-Term Success</div></div></div><div class="ctaBox"><h2>START TRADING<br>THE SMART WAY</h2><p>Join traders using Lumora Bot for a more disciplined automated trading experience.</p><a class="btn" href="downloads/LumoraBot-Latest.zip">⇩ Download Now</a></div></div></section>
+<section><div class="wrap three"><div class="box"><h2>🖥 System Requirements</h2><div class="list"><div>Windows 10 / 11 (64-bit)</div><div>MetaTrader 5 (Supported Broker)</div><div>Stable Internet Connection</div><div>Minimum 4GB RAM (8GB Recommended)</div><div>VPS Recommended (for 24/7 Trading)</div></div></div><div class="box"><h2>💎 Why Choose Lumora?</h2><div class="list"><div>Proven Strategy</div><div>Multi-Broker Compatibility</div><div>Regular Updates</div><div>Dedicated Support</div><div>Growing Community</div><div>Built for Long-Term Success</div></div></div><div class="ctaBox"><h2>START TRADING<br>THE SMART WAY</h2><p>Join traders using Lumora Bot for a more disciplined automated trading experience.</p><a class="btn" href="/api/latest-download">⇩ Download Now</a></div></div></section>
 
 <section id="installation"><div class="wrap"><div class="head"><div class="title">Easy Installation</div><div class="sub">Get started in just a few simple steps.</div></div><div class="steps">
 <div class="step"><div class="num">1</div><h3>⇩ Download</h3><p>Download the latest client file from this page.</p></div>
@@ -115,9 +115,12 @@ footer{padding:28px 0;color:#91a9c5;font-size:11px}.foot{display:flex;align-item
 </div></div></section>
 
 <section id="updates"><div class="wrap"><div class="head"><div class="title">Latest Update</div><div class="sub">Current release information.</div></div><div class="updateGrid">
-<div class="update"><div class="panel"><span class="badge">NEW</span><h2>Version v1.0.3</h2><p>Released: 2026.09.01</p><a class="btn" href="downloads/LumoraBot-Latest.zip">⇩ Download</a></div><div class="panel"><b>What's New?</b><ul><li>Improved trade entry logic</li><li>Enhanced risk management</li><li>Better stability and performance</li><li>Minor bug fixes</li></ul></div></div>
+<div class="update"><div class="panel"><span class="badge">NEW</span><h2>Version <span id="updateVersion">Latest</span></h2><p>Released: <span id="updateDate">—</span></p><a class="btn" href="/api/latest-download">⇩ Download</a></div><div class="panel"><b>What's New?</b><ul id="updateNotes"><li>Loading latest release...</li></ul></div></div>
 <div id="support"><div class="title" style="margin-bottom:12px">🎧 Need Help?</div><div class="support"><div>♧ Installation Support</div><div>▣ Broker Setup</div><div>◷ Technical Support</div><div>⌕ FAQ</div></div><a class="btn" style="width:100%;margin-top:10px" href="mailto:support@lumora.example">✈ Contact Support</a></div>
 </div></div></section>
 
-<footer><div class="wrap foot"><div><img class="footLogo" src="assets/lumora-logo.png"><br>© 2026 Lumora. All rights reserved.</div><div>Privacy Policy &nbsp; | &nbsp; Terms of Service &nbsp; | &nbsp; Support</div><div>DISCIPLINE BUILDS WEALTH —<br>Version v1.0.3</div></div></footer>
+<footer><div class="wrap foot"><div><img class="footLogo" src="assets/lumora-logo.png"><br>© 2026 Lumora. All rights reserved.</div><div>Privacy Policy &nbsp; | &nbsp; Terms of Service &nbsp; | &nbsp; Support</div><div>DISCIPLINE BUILDS WEALTH —<br>Version <span id="footerVersion">Latest</span></div></div></footer>
+<script>
+(async()=>{try{const r=await fetch('/api/latest-release',{cache:'no-store'});if(!r.ok)throw 0;const x=await r.json();const v=x.version||'Latest';const d=x.release_date||'—';document.querySelectorAll('#latestVersion,#updateVersion,#footerVersion').forEach(e=>e.textContent=v);const de=document.getElementById('updateDate');if(de)de.textContent=d;const ul=document.getElementById('updateNotes');if(ul){const n=Array.isArray(x.release_notes)?x.release_notes:[];ul.innerHTML=(n.length?n:['Latest Lumora Bot release']).map(t=>`<li>${String(t).replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]))}</li>`).join('');}}catch(e){document.querySelectorAll('#latestVersion,#updateVersion,#footerVersion').forEach(e=>e.textContent='Latest');}})();
+</script>
 </body></html>
