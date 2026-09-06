@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lumora Admin — Bot Updates</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial;background:#020817;color:#eef5ff}
+.wrap{max-width:980px;margin:auto;padding:36px 20px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+h1{margin:0;font-size:28px}.muted{color:#93abc7}.glass{background:linear-gradient(145deg,rgba(11,39,67,.58),rgba(3,15,30,.48));border:1px solid rgba(76,166,238,.3);border-radius:18px;padding:22px;backdrop-filter:blur(18px);margin-bottom:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}label{display:block;font-size:12px;color:#a9bfd8;margin-bottom:7px}input,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #234d74;background:#041326;color:white;outline:none}textarea{min-height:120px;resize:vertical}
+.btn{border:1px solid #70a9ff;color:white;background:linear-gradient(110deg,#148cff,#814cff);padding:12px 18px;border-radius:10px;font-weight:800;cursor:pointer}.btn.secondary{background:#06182c}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.status{padding:10px 12px;border-radius:9px;background:#06182c;color:#a9c1dc;font-size:13px}
+table{width:100%;border-collapse:collapse}th,td{padding:11px 8px;border-bottom:1px solid #183651;text-align:left;font-size:12px}th{color:#7fb7ed}.danger{background:#32101b;border-color:#b94b67}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.top{align-items:flex-start;gap:15px;flex-direction:column}}
+</style>
+</head>
+<body><div class="wrap">
+<div class="top"><div><h1>LUMORA ADMIN</h1><div class="muted">Bot release management</div></div><button class="btn secondary" id="logout" hidden>Logout</button></div>
+
+<div class="glass" id="loginBox">
+<h2>Admin Login</h2><div class="grid">
+<div><label>Email</label><input id="email" type="email" placeholder="admin email"></div>
+<div><label>Password</label><input id="password" type="password" placeholder="password"></div>
+</div><div class="row" style="margin-top:14px"><button class="btn" id="login">Login</button><span class="status" id="loginStatus">Configure Supabase first.</span></div>
+</div>
+
+<div id="app" hidden>
+<div class="glass"><h2>Publish New Bot Version</h2>
+<div class="grid">
+<div><label>Version</label><input id="version" placeholder="v1.0.4"></div>
+<div><label>Release Date</label><input id="releaseDate" type="date"></div>
+</div>
+<div style="margin-top:14px"><label>Release Notes (one item per line)</label><textarea id="notes" placeholder="Improved stability&#10;Bug fixes&#10;New features"></textarea></div>
+<div style="margin-top:14px"><label>Bot ZIP / EXE</label><input id="file" type="file" accept=".zip,.exe"></div>
+<div class="row" style="margin-top:14px"><button class="btn" id="publish">Upload & Publish</button><span class="status" id="status">Ready.</span></div>
+</div>
+
+<div class="glass"><h2>Published Releases</h2><div id="releases">Loading...</div></div>
+</div>
+</div>
+<script src="config.js"></script>
+<script>
+const cfg=window.LUMORA_SUPABASE||{};
+const client=(cfg.url&&cfg.anonKey&&!cfg.url.includes("YOUR-"))?supabase.createClient(cfg.url,cfg.anonKey):null;
+const $=id=>document.getElementById(id);
+function msg(t){$("status").textContent=t}
+function loginMsg(t){$("loginStatus").textContent=t}
+async function isAdmin(){
+  if(!client) return false;
+
+  const { data: { user } } = await client.auth.getUser();
+  if(!user) return false;
+
+  const { data, error } = await client.rpc("is_lumora_admin");
+
+  if(error){
+    console.error("Admin check error:", error);
+    return false;
+  }
+
+  return data === true;
+}
+async function load(){
+ if(!client){loginMsg("Add your Supabase URL and anon key to admin/config.js.");return}
+ const {data:{session}}=await client.auth.getSession();
+ if(session && await isAdmin()){ $("loginBox").hidden=true;$("app").hidden=false;$("logout").hidden=false; loadReleases();}
+ else {$("loginBox").hidden=false;$("app").hidden=true;$("logout").hidden=true;}
+}
+$("login").onclick=async()=>{if(!client){loginMsg("Configure admin/config.js first.");return}
+ const {error}=await client.auth.signInWithPassword({email:$("email").value,password:$("password").value});
+ if(error){loginMsg(error.message);return}
+ if(!(await isAdmin())){await client.auth.signOut();loginMsg("This account is not an authorized Lumora admin.");return}
+ load();
+};
+$("logout").onclick=async()=>{await client.auth.signOut();load()};
+$("publish").onclick=async()=>{
+ if(!client)return;
+ const file=$("file").files[0], version=$("version").value.trim(), date=$("releaseDate").value, notes=$("notes").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+ if(!file||!version||!date){msg("Version, release date and file are required.");return}
+ msg("Uploading...");
+ const safe=file.name.replace(/[^a-zA-Z0-9._-]/g,"_"), path=`releases/${Date.now()}-${safe}`;
+ const up=await client.storage.from("bot-releases").upload(path,file,{upsert:false,contentType:file.type||"application/octet-stream"});
+ if(up.error){msg(up.error.message);return}
+ const ins=await client.from("bot_releases").insert({version,release_date:date,release_notes:notes,file_path:path,original_filename:file.name,published:true}).select().single();
+ if(ins.error){await client.storage.from("bot-releases").remove([path]);msg(ins.error.message);return}
+ msg("Published successfully.");$("file").value="";$("version").value="";$("notes").value="";loadReleases();
+};
+async function loadReleases(){
+ const {data,error}=await client.from("bot_releases").select("*").order("created_at",{ascending:false});
+ if(error){$("releases").textContent=error.message;return}
+ if(!data?.length){$("releases").textContent="No releases yet.";return}
+ $("releases").innerHTML="<table><tr><th>Version</th><th>Date</th><th>File</th><th>Published</th></tr>"+
+ data.map(r=>`<tr><td>${r.version}</td><td>${r.release_date}</td><td>${r.original_filename}</td><td>${r.published?"YES":"NO"}</td></tr>`).join("")+"</table>";
+}
+load();
+</script></body></html>
