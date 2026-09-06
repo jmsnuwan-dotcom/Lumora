@@ -46,19 +46,11 @@ const $=id=>document.getElementById(id);
 function msg(t){$("status").textContent=t}
 function loginMsg(t){$("loginStatus").textContent=t}
 async function isAdmin(){
-  if(!client) return false;
-
-  const { data: { user } } = await client.auth.getUser();
-  if(!user) return false;
-
-  const { data, error } = await client.rpc("is_lumora_admin");
-
-  if(error){
-    console.error("Admin check error:", error);
-    return false;
-  }
-
-  return data === true;
+ if(!client)return false;
+ const {data:{user}}=await client.auth.getUser(); if(!user)return false;
+ const {data,error}=await client.rpc("is_lumora_admin");
+ if(error){ console.error("Admin check error:", error); return false; }
+ return data === true;
 }
 async function load(){
  if(!client){loginMsg("Add your Supabase URL and anon key to admin/config.js.");return}
